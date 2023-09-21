@@ -4,13 +4,14 @@
 
 int main(){
 
-    size_t n = 1'000'000'000;
-    double pi = 0;
+    size_t N = 1'500'000'000;
+    double ln = 0;
 
-    for (size_t i {}; i < n; ++i){
-        pi += ((pow(-1, (double)(i % 2))) / (double)((i << 2) + 1)) * 4;
+    for (size_t n {1}; n < N; ++n){
+        //pi += ((pow(-1, (double)(!(n % 2)))) / (double)((n << 2) + 1)) * 4;
+        ln += (pow(-1, (double)(!(n % 2)))) * pow(10, (double)n) / (double)n;
     }
-    printf("%e", pi);
+    //printf("%e", ln);
 
 
     return 0;
