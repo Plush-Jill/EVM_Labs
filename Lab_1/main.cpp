@@ -4,7 +4,7 @@
 
 int main(){
 
-    size_t N = 1'500'000'000;
+    size_t N = 1'000'000'000;
     double ln = 0;
 
     for (size_t n {1}; n < N; ++n){
@@ -15,3 +15,5 @@ int main(){
 
     return 0;
 }
+
+
