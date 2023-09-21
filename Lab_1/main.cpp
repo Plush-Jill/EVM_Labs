@@ -11,5 +11,7 @@ int main(){
         pi += ((pow(-1, (double)(i % 2))) / (double)((i << 2) + 1)) * 4;
     }
     printf("%e", pi);
+
+
     return 0;
 }
