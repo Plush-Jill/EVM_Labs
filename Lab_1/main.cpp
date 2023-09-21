@@ -8,7 +8,6 @@ int main(){
     double ln = 0;
 
     for (size_t n {1}; n < N; ++n){
-        //pi += ((pow(-1, (double)(!(n % 2)))) / (double)((n << 2) + 1)) * 4;
         ln += (pow(-1, (double)(!(n % 2)))) * pow(10, (double)n) / (double)n;
     }
     //printf("%e", ln);
