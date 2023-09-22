@@ -3,6 +3,10 @@
 /Lab_1/cmake-build-debug
 /Lab_1/.idea
 
+/Lab_2/cmake-build-debug/
+/Lab_2/cmake-build-debug
+/Lab_2/.idea
+
 # Prerequisites
 *.d
 
