@@ -1,0 +1,64 @@
+#!/bin/bash
+
+
+g++ -O0 main.cpp -o main
+echo "-O0:" &>> timeResults.txt
+for ((i = 0; i < 5; i++))
+do
+  (time ./main) &>> timeResults.txt
+  echo "##########" >> timeResults.txt
+done
+
+
+g++ -O1 main.cpp -o main
+echo "-O1:" &>> timeResults.txt
+for ((i = 0; i < 5; i++))
+do
+  (time ./main) &>> timeResults.txt
+  echo "##########" >> timeResults.txt
+done
+
+
+g++ -O2 main.cpp -o main
+echo "-O2:" &>> timeResults.txt
+for ((i = 0; i < 5; i++))
+do
+  (time ./main) &>> timeResults.txt
+  echo "##########" >> timeResults.txt
+done
+
+
+g++ -O3 main.cpp -o main
+echo "-O3:" &>> timeResults.txt
+for ((i = 0; i < 5; i++))
+do
+  (time ./main) &>> timeResults.txt
+  echo "##########" >> timeResults.txt
+done
+
+
+g++ -Os main.cpp -o main
+echo "-Os:" &>> timeResults.txt
+for ((i = 0; i < 5; i++))
+do
+  (time ./main) &>> timeResults.txt
+  echo "##########" >> timeResults.txt
+done
+
+
+g++ -Ofast main.cpp -o main
+echo "-Ofast:" &>> timeResults.txt
+for ((i = 0; i < 5; i++))
+do
+  (time ./main) &>> timeResults.txt
+  echo "##########" >> timeResults.txt
+done
+
+
+g++ -Og main.cpp -o main
+echo "-Og:" &>> timeResults.txt
+for ((i = 0; i < 5; i++))
+do
+  (time ./main) &>> timeResults.txt
+  echo "##########" >> timeResults.txt
+done

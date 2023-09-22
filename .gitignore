@@ -1,13 +1,13 @@
 # Prerequisites
 *.d
+/Lab_2/cmake-build-debug/
+/Lab_2/.idea
 
-# Compiled Object files
-*.slo
+
+#Object files
 *.lo
 *.o
-*.obj
-
-# Precompiled Headers
+*.obHeaders
 *.gch
 *.pch
 
@@ -30,3 +30,4 @@
 *.exe
 *.out
 *.app
+.gitignore.swp
