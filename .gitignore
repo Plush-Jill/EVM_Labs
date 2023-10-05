@@ -1,33 +1,3 @@
-# Prerequisites
-*.d
-/Lab_2/cmake-build-debug/
-/Lab_2/.idea
 
-
-#Object files
-*.lo
-*.o
-*.obHeaders
-*.gch
-*.pch
-
-# Compiled Dynamic libraries
-*.so
-*.dylib
-*.dll
-
-# Fortran module files
-*.mod
-*.smod
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
-*.lib
-
-# Executables
-*.exe
-*.out
-*.app
-.gitignore.swp
+Lab_2/.idea
+Lab_2/cmake-build-debug
