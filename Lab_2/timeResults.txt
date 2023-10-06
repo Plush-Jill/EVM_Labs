@@ -1,0 +1,371 @@
+O0 OPTIMIZATION LEVEL:
+__Executing time for N = 4000000000:
+1:
+
+real	0m57,917s
+user	0m57,913s
+sys	0m0,000s
+2:
+
+real	0m56,198s
+user	0m56,197s
+sys	0m0,000s
+3:
+
+real	0m56,250s
+user	0m56,249s
+sys	0m0,000s
+__Executing time for N = 3000000000:
+1:
+
+real	0m41,947s
+user	0m41,947s
+sys	0m0,000s
+2:
+
+real	0m42,349s
+user	0m42,349s
+sys	0m0,000s
+3:
+
+real	0m43,225s
+user	0m43,224s
+sys	0m0,000s
+__Executing time for N = 2000000000:
+1:
+
+real	0m28,167s
+user	0m28,002s
+sys	0m0,164s
+2:
+
+real	0m28,022s
+user	0m28,022s
+sys	0m0,000s
+3:
+
+real	0m28,986s
+user	0m28,986s
+sys	0m0,000s
+#############################
+
+
+
+O1 OPTIMIZATION LEVEL:
+__Executing time for N = 4000000000:
+1:
+
+real	0m55,574s
+user	0m55,567s
+sys	0m0,004s
+2:
+
+real	0m55,247s
+user	0m55,247s
+sys	0m0,000s
+3:
+
+real	0m55,064s
+user	0m55,063s
+sys	0m0,000s
+__Executing time for N = 3000000000:
+1:
+
+real	0m41,834s
+user	0m41,828s
+sys	0m0,004s
+2:
+
+real	0m42,854s
+user	0m42,852s
+sys	0m0,000s
+3:
+
+real	0m41,522s
+user	0m41,521s
+sys	0m0,000s
+__Executing time for N = 2000000000:
+1:
+
+real	0m27,552s
+user	0m27,552s
+sys	0m0,000s
+2:
+
+real	0m27,627s
+user	0m27,622s
+sys	0m0,004s
+3:
+
+real	0m27,557s
+user	0m27,557s
+sys	0m0,000s
+#############################
+
+
+
+O2 OPTIMIZATION LEVEL:
+__Executing time for N = 4000000000:
+1:
+
+real	0m58,328s
+user	0m58,327s
+sys	0m0,000s
+2:
+
+real	0m56,762s
+user	0m56,761s
+sys	0m0,000s
+3:
+
+real	0m57,092s
+user	0m57,088s
+sys	0m0,000s
+__Executing time for N = 3000000000:
+1:
+
+real	0m44,139s
+user	0m44,128s
+sys	0m0,008s
+2:
+
+real	0m44,046s
+user	0m44,044s
+sys	0m0,000s
+3:
+
+real	0m42,591s
+user	0m42,590s
+sys	0m0,000s
+__Executing time for N = 2000000000:
+1:
+
+real	0m29,156s
+user	0m29,156s
+sys	0m0,000s
+2:
+
+real	0m28,430s
+user	0m28,429s
+sys	0m0,000s
+3:
+
+real	0m28,973s
+user	0m28,973s
+sys	0m0,000s
+#############################
+
+
+
+O3 OPTIMIZATION LEVEL:
+__Executing time for N = 4000000000:
+1:
+
+real	0m56,716s
+user	0m56,715s
+sys	0m0,000s
+2:
+
+real	0m57,194s
+user	0m57,194s
+sys	0m0,000s
+3:
+
+real	0m56,905s
+user	0m56,904s
+sys	0m0,000s
+__Executing time for N = 3000000000:
+1:
+
+real	0m42,596s
+user	0m42,594s
+sys	0m0,000s
+2:
+
+real	0m43,746s
+user	0m43,744s
+sys	0m0,000s
+3:
+
+real	0m43,709s
+user	0m43,706s
+sys	0m0,000s
+__Executing time for N = 2000000000:
+1:
+
+real	0m28,401s
+user	0m28,401s
+sys	0m0,000s
+2:
+
+real	0m29,148s
+user	0m29,143s
+sys	0m0,004s
+3:
+
+real	0m28,440s
+user	0m28,440s
+sys	0m0,000s
+#############################
+
+
+
+Os OPTIMIZATION LEVEL:
+__Executing time for N = 4000000000:
+1:
+
+real	0m56,365s
+user	0m56,365s
+sys	0m0,000s
+2:
+
+real	0m55,002s
+user	0m55,002s
+sys	0m0,000s
+3:
+
+real	0m55,074s
+user	0m55,073s
+sys	0m0,000s
+__Executing time for N = 3000000000:
+1:
+
+real	0m41,331s
+user	0m41,330s
+sys	0m0,000s
+2:
+
+real	0m41,176s
+user	0m41,176s
+sys	0m0,000s
+3:
+
+real	0m41,360s
+user	0m41,359s
+sys	0m0,000s
+__Executing time for N = 2000000000:
+1:
+
+real	0m27,648s
+user	0m27,647s
+sys	0m0,000s
+2:
+
+real	0m27,670s
+user	0m27,668s
+sys	0m0,000s
+3:
+
+real	0m27,514s
+user	0m27,514s
+sys	0m0,000s
+#############################
+
+
+
+Ofast OPTIMIZATION LEVEL:
+__Executing time for N = 4000000000:
+1:
+
+real	0m54,947s
+user	0m54,947s
+sys	0m0,000s
+2:
+
+real	0m54,856s
+user	0m54,856s
+sys	0m0,000s
+3:
+
+real	0m0,001s
+user	0m0,001s
+sys	0m0,000s
+__Executing time for N = 3000000000:
+1:
+
+real	0m40,524s
+user	0m40,524s
+sys	0m0,000s
+2:
+
+real	0m41,063s
+user	0m41,063s
+sys	0m0,000s
+3:
+
+real	0m40,984s
+user	0m40,984s
+sys	0m0,000s
+__Executing time for N = 2000000000:
+1:
+
+real	0m27,136s
+user	0m27,136s
+sys	0m0,000s
+2:
+
+real	0m27,643s
+user	0m27,643s
+sys	0m0,000s
+3:
+
+real	0m27,489s
+user	0m27,489s
+sys	0m0,000s
+#############################
+
+
+
+Og OPTIMIZATION LEVEL:
+__Executing time for N = 4000000000:
+1:
+
+real	0m52,667s
+user	0m52,666s
+sys	0m0,000s
+2:
+
+real	0m52,092s
+user	0m52,092s
+sys	0m0,000s
+3:
+
+real	0m52,234s
+user	0m52,233s
+sys	0m0,000s
+__Executing time for N = 3000000000:
+1:
+
+real	0m39,133s
+user	0m39,133s
+sys	0m0,000s
+2:
+
+real	0m39,172s
+user	0m39,172s
+sys	0m0,000s
+3:
+
+real	0m39,116s
+user	0m39,115s
+sys	0m0,000s
+__Executing time for N = 2000000000:
+1:
+
+real	0m26,006s
+user	0m26,006s
+sys	0m0,000s
+2:
+
+real	0m26,414s
+user	0m26,413s
+sys	0m0,000s
+3:
+
+real	0m25,981s
+user	0m25,980s
+sys	0m0,000s
+#############################
+
+
+
