@@ -9,7 +9,7 @@ int main(int argc, char** argv){
     double x = 10;
 
     for (size_t n = 0; n < N; ++n){
-        ln += (pow(-1, (double)(!(n % 2)))) * pow(x, (double)(n-1));
+        ln += (pow(-1, (double)(!(n % 2)))) * pow(x, (double)(n)) / (double)n;
     }
 
 
