@@ -12,7 +12,7 @@ int main(int argc, char** argv){
 
 
     for (size_t n = 1; n < N; ++n){
-        pow1 = pow(-1, (double)(!(n%2)));
+        pow1 = pow(-1, (double)(n+1));
         pow2 = pow(x, (double)n);
         ln += pow1 * pow2 / (double)n;
     }
