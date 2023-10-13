@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <math.h>
-#include <stdlib.h>
 
-int main(int argc, char** argv){
+int main(){
 
-    size_t N = (size_t)atoll(argv[1]);
+    size_t N = 1000000000;
     double ln = 0;
     double x = 10;
     double pow1;
