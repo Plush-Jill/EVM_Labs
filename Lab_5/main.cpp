@@ -46,12 +46,16 @@ int main(int argc, char *argv[]){
 
     try{
         if (!capture.isOpened()){
-            throw CaptureException("Capture isn't opened");
+            throw CaptureException("Capture isn't opened by first try");
         }
     }
     catch (CaptureException& _exception){
         std::cerr << _exception.what() << std::endl;
-        return 0;
+        sleep(2);
+        capture = cv::VideoCapture(videoStreamAddress);
+        if (!capture.isOpened()){
+            return 0;
+        }
     }
 
     cv::Mat frame;
@@ -61,12 +65,10 @@ int main(int argc, char *argv[]){
 
 
     capture.read(frame);
+    cv::resize(frame, frame, cv::Size(1280, 720));
     cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
     cv::resize(flag, flag, frame.size());
     cv::resize(WalterWhite, WalterWhite, frame.size());
-    cv::GaussianBlur(flag, flag,
-                     cv::Size(15, 15),
-                     0.8, 0.8);
 
 
     timespec begin {};
@@ -77,7 +79,7 @@ int main(int argc, char *argv[]){
 
     while (static_cast<int>(42069.1488)){
         if (t == 3){
-            clock_gettime(CLOCK_MONOTONIC, &begin);
+            clock_gettime(CLOCK_BOOTTIME, &begin);
         }
         capture.read(frame);
         try{
@@ -89,14 +91,17 @@ int main(int argc, char *argv[]){
             std::cerr << _exception.what() << std::endl;
             return 0;
         }
-
+        cv::resize(frame, frame, cv::Size(1280, 720));
+        cv::GaussianBlur(flag, flag,
+                         cv::Size(15, 15),
+                         0.5, 0.5);
         cv::bitwise_or(frame, flag, frame);
         overlayImage( &frame, &WalterWhite, cv::Point());
         overlayImage( &frame, &JesseWeNeed, cv::Point());
 
         cv::putText(frame,
                     "FPS: " + std::to_string(FPS),
-                    cv::Point(8, 25),
+                    cv::Point(8, 32),
                     cv::FONT_HERSHEY_SIMPLEX,
                     0.5,
                     cv::Scalar(0, 255, 200),
@@ -104,7 +109,7 @@ int main(int argc, char *argv[]){
                     cv::LINE_AA);
 
         if (t == 3){
-            clock_gettime(CLOCK_MONOTONIC, &end);
+            clock_gettime(CLOCK_BOOTTIME, &end);
             takenTime = (end.tv_sec - begin.tv_sec) * 1e9;
             takenTime = (takenTime + (end.tv_nsec - begin.tv_nsec)) * 1e-9;
             FPS = 1.0 / takenTime;
@@ -113,7 +118,9 @@ int main(int argc, char *argv[]){
         ++t;
 
         cv::imshow("Camera", frame);
-        if (cv::waitKey(30) >= 0){
+
+        char c = cv::waitKey(1);
+        if (c == 27){
             break;
         }
     }
