@@ -2,9 +2,34 @@
 #include "Lab_5_Exceptions.h"
 #include <opencv4/opencv2/opencv.hpp>
 #include <opencv2/highgui/highgui.hpp>
+#include <opencv2/imgproc.hpp>
+#include <opencv2/imgcodecs.hpp>
 #include <ctime>
 /// http://192.168.0.101:4747/video
 /// webcam
+
+void overlayImage(cv::Mat* src, cv::Mat* overlay, const cv::Point& location){
+    for (int y = cv::max(location.y, 0); y < src->rows; ++y){
+        int fY = y - location.y;
+        if (fY >= overlay->rows){
+            break;
+        }
+        for (int x = cv::max(location.x, 0); x < src->cols; ++x){
+            int fX = x - location.x;
+
+            if (fX >= overlay->cols){
+                break;
+            }
+            double opacity = ((double)overlay->data[fY * overlay->step + fX * overlay->channels() + 3]) / 255;
+
+            for (int c = 0; opacity > 0 && c < src->channels(); ++c){
+                unsigned char overlayPx = overlay->data[fY * overlay->step + fX * overlay->channels() + c];
+                unsigned char srcPx = src->data[y * src->step + x * src->channels() + c];
+                src->data[y * src->step + src->channels() * x + c] = srcPx * (1. - opacity) + overlayPx * opacity;
+            }
+        }
+    }
+}
 int main(int argc, char *argv[]){
     if (argc < 2){
         std::cerr << "Arguments, please" << std::endl;
@@ -31,13 +56,18 @@ int main(int argc, char *argv[]){
 
     cv::Mat frame;
     cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag.jpg");
-    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/11.png");
-    if (WalterWhite.empty()){
-        std::cout << "NIGGERS" << std::endl;
-    }
+    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Walter.png", cv::IMREAD_UNCHANGED);
+    cv::Mat JesseWeNeed = cv::imread("/home/plushjill/All_Random/broadcast5.png", cv::IMREAD_UNCHANGED);
 
-    //cv::Mat kernel1 = (cv::Mat_<double>(3,3) << 0, 0, 0, 0, 1, 0, 0, 0, 0);
-    //cv::Mat identity;
+
+    capture.read(frame);
+    cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
+    cv::resize(flag, flag, frame.size());
+    cv::resize(WalterWhite, WalterWhite, frame.size());
+    cv::GaussianBlur(flag, flag,
+                     cv::Size(15, 15),
+                     0.8, 0.8);
+
 
     timespec begin {};
     timespec end {};
@@ -54,25 +84,16 @@ int main(int argc, char *argv[]){
             if (frame.empty()){
                 throw FrameException("Frame wasn't read");
             }
-        }catch (FrameException& _exception){
+        }
+        catch (FrameException& _exception){
             std::cerr << _exception.what() << std::endl;
             return 0;
         }
-        //cv::resize(flag, flag, cv::Size(frame.elemSize(), frame.elemSize1()));
-        cv::resize(flag, flag, frame.size());
-        cv::resize(WalterWhite, WalterWhite, frame.size());
-        //const cv::Point origin(100, 100);
-        //cv::Rect roi(origin, WalterWhite.size());
-        cv::GaussianBlur(flag, flag, cv::Size(15, 15), 0.5, 0.5);
-        //cv::bitwise_not(frame, frame);
-        //cv::bitwise_or(frame, flag, frame);
 
-        //addWeighted(frame, 0.5, flag, 0.5, 0.0, frame);
+        cv::bitwise_or(frame, flag, frame);
+        overlayImage( &frame, &WalterWhite, cv::Point());
+        overlayImage( &frame, &JesseWeNeed, cv::Point());
 
-        /*filter2D(frame, frame, -1 ,
-                 kernel1, cv::Point(-1, -1),
-                 0, 4);*/
-        WalterWhite.copyTo(frame);
         cv::putText(frame,
                     "FPS: " + std::to_string(FPS),
                     cv::Point(8, 25),
@@ -90,15 +111,14 @@ int main(int argc, char *argv[]){
             t = 0;
         }
         ++t;
+
         cv::imshow("Camera", frame);
         if (cv::waitKey(30) >= 0){
             break;
         }
     }
+
     capture.release();
     cv::destroyAllWindows();
-    return 0;
-
-
     return 0;
 }
