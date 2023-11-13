@@ -110,7 +110,6 @@ int main(int argc, char *argv[]){
                          cv::Size(15, 15),
                          0.5, 0.5);
         addWeighted(flag, 0.5, frame, 0.5, 0.0, frame);
-        //addWeighted(WalterWhite, 2, frame, 2, 0.0, frame);
         overlayImage( &frame, &WalterWhite, cv::Point());
         overlayImage( &frame, &JesseWeNeed, cv::Point());
         cv::putText(frame,
