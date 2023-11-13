@@ -38,11 +38,17 @@ int main(int argc, char *argv[]){
 
     std::string videoStreamAddress = argv[1];
     cv::VideoCapture capture; //(videoStreamAddress[0] - '0');
+    bool sourceIsMobileCamera;
+
+
     if (videoStreamAddress == "webcam"){
+        sourceIsMobileCamera = false;
         capture = cv::VideoCapture(0);
     }else{
+        sourceIsMobileCamera = true;
         capture = cv::VideoCapture(videoStreamAddress);
     }
+
 
     try{
         if (!capture.isOpened()){
@@ -52,15 +58,17 @@ int main(int argc, char *argv[]){
     catch (CaptureException& _exception){
         std::cerr << _exception.what() << std::endl;
         sleep(2);
+        sourceIsMobileCamera = true;
         capture = cv::VideoCapture(videoStreamAddress);
         if (!capture.isOpened()){
             return 0;
         }
     }
 
+
     cv::Mat frame;
-    cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag.jpg", cv::IMREAD_UNCHANGED);
-    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Walter.png", cv::IMREAD_UNCHANGED);
+    cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag2.jpg", cv::IMREAD_UNCHANGED);
+    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Whalter_White4.png", cv::IMREAD_UNCHANGED);
     cv::Mat JesseWeNeed = cv::imread("/home/plushjill/All_Random/broadcast5.png", cv::IMREAD_UNCHANGED);
 
     capture.read(frame);
@@ -68,7 +76,6 @@ int main(int argc, char *argv[]){
     cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
     cv::resize(flag, flag, frame.size());
     cv::resize(WalterWhite, WalterWhite, frame.size());
-
 
     timespec begin {};
     timespec end {};
@@ -80,6 +87,8 @@ int main(int argc, char *argv[]){
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &begin);
         }
+
+
         capture.read(frame);
         try{
             if (frame.empty()){
@@ -90,14 +99,20 @@ int main(int argc, char *argv[]){
             std::cerr << _exception.what() << std::endl;
             return 0;
         }
+
+
+
+        if (!sourceIsMobileCamera){
+            cv::flip(frame, frame, 1);
+        }
         cv::resize(frame, frame, cv::Size(1280, 720));
         cv::GaussianBlur(flag, flag,
                          cv::Size(15, 15),
                          0.5, 0.5);
-        cv::bitwise_or(frame, flag, frame);
+        addWeighted(flag, 0.5, frame, 0.5, 0.0, frame);
+        //addWeighted(WalterWhite, 2, frame, 2, 0.0, frame);
         overlayImage( &frame, &WalterWhite, cv::Point());
         overlayImage( &frame, &JesseWeNeed, cv::Point());
-
         cv::putText(frame,
                     "FPS: " + std::to_string(FPS),
                     cv::Point(8, 32),
@@ -107,6 +122,7 @@ int main(int argc, char *argv[]){
                     1,
                     cv::LINE_AA);
 
+
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &end);
             takenTime = (end.tv_sec - begin.tv_sec) * 1e9;
@@ -115,6 +131,8 @@ int main(int argc, char *argv[]){
             t = 0;
         }
         ++t;
+
+
 
         cv::imshow("Camera", frame);
 
