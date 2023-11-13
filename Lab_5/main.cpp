@@ -5,7 +5,7 @@
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
 #include <ctime>
-/// http://192.168.0.101:4747/video
+/// http://192.168.0.103:4747/video
 /// webcam
 
 void overlayImage(cv::Mat* src, cv::Mat* overlay, const cv::Point& location){
@@ -59,10 +59,9 @@ int main(int argc, char *argv[]){
     }
 
     cv::Mat frame;
-    cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag.jpg");
+    cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag.jpg", cv::IMREAD_UNCHANGED);
     cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Walter.png", cv::IMREAD_UNCHANGED);
     cv::Mat JesseWeNeed = cv::imread("/home/plushjill/All_Random/broadcast5.png", cv::IMREAD_UNCHANGED);
-
 
     capture.read(frame);
     cv::resize(frame, frame, cv::Size(1280, 720));
