@@ -9,29 +9,23 @@
 /// webcam
 
 
-void overlayImage(cv::Mat* src, cv::Mat* overlay, const cv::Point& location) {
-    for (int y = cv::max(location.y, 0); y < src->rows; ++y) {
-        int fY = y - location.y;
-        if (fY >= overlay->rows) {
-            break;
-        }
-        for (int x = cv::max(location.x, 0); x < src->cols; ++x) {
-            int fX = x - location.x;
+void PlacePNG(cv::Mat& frame, cv::Mat& ImageToPlace){
+    for (int y = 0; y < frame.rows; ++y){
+        for (int x = 0; x < frame.cols; ++x){
+            auto &framePixel = frame.at<cv::Vec4b>(y, x);
+            auto &walterWhitePixel = ImageToPlace.at<cv::Vec4b>(y, x);
 
-            if (fX >= overlay->cols) {
-                break;
-            }
-            double opacity = ((double) overlay->data[fY * overlay->step + fX * overlay->channels() + 3]) / 255;
-
-            for (int c = 0; opacity > 0 && c < src->channels(); ++c) {
-                unsigned char overlayPx = overlay->data[fY * overlay->step + fX * overlay->channels() + c];
-                unsigned char srcPx = src->data[y * src->step + x * src->channels() + c];
-                src->data[y * src->step + src->channels() * x + c] = srcPx * (1. - opacity) + overlayPx * opacity;
-            }
+            double alpha = walterWhitePixel[3] / 255.0;
+            framePixel[0] = static_cast<uchar>((1.0 - alpha) * framePixel[0] +
+                                               alpha * walterWhitePixel[0]);
+            framePixel[1] = static_cast<uchar>((1.0 - alpha) * framePixel[1] +
+                                               alpha * walterWhitePixel[1]);
+            framePixel[2] = static_cast<uchar>((1.0 - alpha) * framePixel[2] +
+                                               alpha * walterWhitePixel[2]);
+            framePixel[3] = 255;
         }
     }
 }
-
 int main(int argc, char *argv[]){
     if (argc < 2){
         std::cerr << "Arguments, please" << std::endl;
@@ -39,7 +33,7 @@ int main(int argc, char *argv[]){
     }
 
     std::string videoStreamAddress = argv[1];
-    cv::VideoCapture capture; //(videoStreamAddress[0] - '0');
+    cv::VideoCapture capture;
     bool sourceIsMobileCamera;
 
     if (videoStreamAddress == "webcam"){
@@ -54,8 +48,7 @@ int main(int argc, char *argv[]){
         if (!capture.isOpened()){
             throw CaptureException("Capture isn't opened by first try");
         }
-    }
-    catch (CaptureException& _exception){
+    }catch (CaptureException &_exception){
         std::cerr << _exception.what() << std::endl;
         sleep(2);
         sourceIsMobileCamera = true;
@@ -66,27 +59,25 @@ int main(int argc, char *argv[]){
     }
 
     cv::Mat frame;
-    cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag2.jpg");
-    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Whalter_White3.png", CV_8UC4); /// CV_8UC4
+    cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag2.jpg", cv::IMREAD_UNCHANGED);
+    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Whalter_White4.png", cv::IMREAD_UNCHANGED); /// CV_8UC4
     cv::Mat JesseWeNeed = cv::imread("/home/plushjill/All_Random/broadcast5.png", cv::IMREAD_UNCHANGED); /// cv::IMREAD_UNCHANGED
 
-    //capture.read(frame);
-    //cv::resize(frame, frame, cv::Size(1280, 720));
-    //cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
-    //cv::resize(flag, flag, frame.size());
-    //cv::resize(WalterWhite, WalterWhite, frame.size());
+    capture.read(frame);
+    cv::resize(frame, frame, cv::Size(1280, 720));
+    cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
+    cv::resize(flag, flag, frame.size());
+    cv::resize(WalterWhite, WalterWhite, frame.size());
+    cv::cvtColor(flag, flag, cv::COLOR_BGR2BGRA);
 
-    //cv::cvtColor(WalterWhite, WalterWhite, cv::COLOR_RGB2BGRA);
-    cv::cvtColor(JesseWeNeed, JesseWeNeed, cv::COLOR_RGBA2BGRA); ///cv::COLOR_RGBA2BGRA
-    //cv::merge(WalterWhite, JesseWeNeed);
 
-    timespec begin {};
-    timespec end {};
+    timespec begin{};
+    timespec end{};
     double takenTime;
-    double FPS {};
-    int t {};
+    double FPS{};
+    int t{};
 
-    while (true){
+    while (static_cast<bool>(42069.1488)){
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &begin);
         }
@@ -96,33 +87,28 @@ int main(int argc, char *argv[]){
             if (frame.empty()){
                 throw FrameException("Frame wasn't read");
             }
-        }
-        catch (FrameException& _exception){
+        }catch (FrameException &_exception){
             std::cerr << _exception.what() << std::endl;
             return 0;
         }
 
 
-        if (!sourceIsMobileCamera){
+        if (!sourceIsMobileCamera) {
             cv::flip(frame, frame, 1);
         }
-        //cv::resize(frame, frame, cv::Size(1280, 720));
+        cv::resize(frame, frame, cv::Size(1280, 720));
+        cv::cvtColor(frame, frame, cv::COLOR_BGR2BGRA);
 
-        cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
-        cv::resize(flag, flag, frame.size());
-        cv::resize(WalterWhite, WalterWhite, frame.size());
 
-        cv::GaussianBlur(flag, flag,
-                         cv::Size(15, 15),
-                         0.5, 0.5);
-        //addWeighted(flag, 0.5, frame, 0.5, 0.0, frame);
-        //frame += JesseWeNeed;
-        //frame += WalterWhite;
-        //addWeighted(WalterWhite, 0.5, frame, 0.5, 0.0, frame);
-        //addWeighted(WalterWhite, 0, frame, 1, 0, frame);
-        
-        overlayImage( &frame, &WalterWhite, cv::Point());
-        //overlayImage( &frame, &JesseWeNeed, cv::Point());
+
+        cv::GaussianBlur(flag, flag,cv::Size(15, 15),0.5, 0.5);
+        addWeighted(flag, 0.5, frame, 0.5, 0.0, frame);
+
+        PlacePNG(frame, WalterWhite);
+        PlacePNG(frame, JesseWeNeed);
+
+
+
         cv::putText(frame,
                     "FPS: " + std::to_string(FPS),
                     cv::Point(8, 32),
@@ -134,8 +120,8 @@ int main(int argc, char *argv[]){
 
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &end);
-            takenTime = (end.tv_sec - begin.tv_sec) * 1e9;
-            takenTime = (takenTime + (end.tv_nsec - begin.tv_nsec)) * 1e-9;
+            takenTime = static_cast<double>(end.tv_sec - begin.tv_sec) * 1e9;
+            takenTime = (takenTime + static_cast<double>(end.tv_nsec - begin.tv_nsec)) * 1e-9;
             FPS = 1.0 / takenTime;
             t = 0;
         }
@@ -143,7 +129,7 @@ int main(int argc, char *argv[]){
 
         cv::imshow("Camera", frame);
 
-        char c = cv::waitKey(1);
+        int c = cv::waitKey(1);
         if (c == 27){
             break;
         }
