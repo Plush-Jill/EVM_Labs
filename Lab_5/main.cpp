@@ -8,6 +8,7 @@
 /// http://192.168.0.103:4747/video
 /// webcam
 
+
 void overlayImage(cv::Mat* src, cv::Mat* overlay, const cv::Point& location) {
     for (int y = cv::max(location.y, 0); y < src->rows; ++y) {
         int fY = y - location.y;
@@ -30,6 +31,7 @@ void overlayImage(cv::Mat* src, cv::Mat* overlay, const cv::Point& location) {
         }
     }
 }
+
 int main(int argc, char *argv[]){
     if (argc < 2){
         std::cerr << "Arguments, please" << std::endl;
@@ -64,17 +66,19 @@ int main(int argc, char *argv[]){
     }
 
     cv::Mat frame;
-    cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag2.jpg", cv::IMREAD_UNCHANGED);
-    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Whalter_White3.png", cv::IMREAD_UNCHANGED);
-    cv::Mat JesseWeNeed = cv::imread("/home/plushjill/All_Random/broadcast5.png", cv::IMREAD_UNCHANGED);
+    cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag2.jpg");
+    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Whalter_White3.png", CV_8UC4); /// CV_8UC4
+    cv::Mat JesseWeNeed = cv::imread("/home/plushjill/All_Random/broadcast5.png", cv::IMREAD_UNCHANGED); /// cv::IMREAD_UNCHANGED
 
-    capture.read(frame);
-    cv::resize(frame, frame, cv::Size(1280, 720));
-    cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
-    cv::resize(flag, flag, frame.size());
-    cv::resize(WalterWhite, WalterWhite, frame.size());
-    cv::cvtColor(WalterWhite, WalterWhite, cv::COLOR_RGBA2RGB);
-    cv::cvtColor(JesseWeNeed, JesseWeNeed, cv::COLOR_RGBA2RGB);
+    //capture.read(frame);
+    //cv::resize(frame, frame, cv::Size(1280, 720));
+    //cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
+    //cv::resize(flag, flag, frame.size());
+    //cv::resize(WalterWhite, WalterWhite, frame.size());
+
+    //cv::cvtColor(WalterWhite, WalterWhite, cv::COLOR_RGB2BGRA);
+    cv::cvtColor(JesseWeNeed, JesseWeNeed, cv::COLOR_RGBA2BGRA); ///cv::COLOR_RGBA2BGRA
+    //cv::merge(WalterWhite, JesseWeNeed);
 
     timespec begin {};
     timespec end {};
@@ -102,15 +106,22 @@ int main(int argc, char *argv[]){
         if (!sourceIsMobileCamera){
             cv::flip(frame, frame, 1);
         }
-        cv::resize(frame, frame, cv::Size(1280, 720));
+        //cv::resize(frame, frame, cv::Size(1280, 720));
+
+        cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
+        cv::resize(flag, flag, frame.size());
+        cv::resize(WalterWhite, WalterWhite, frame.size());
+
         cv::GaussianBlur(flag, flag,
                          cv::Size(15, 15),
                          0.5, 0.5);
-        addWeighted(flag, 0.5, frame, 0.5, 0.0, frame);
-        frame += WalterWhite;
-        frame += JesseWeNeed;
+        //addWeighted(flag, 0.5, frame, 0.5, 0.0, frame);
+        //frame += JesseWeNeed;
+        //frame += WalterWhite;
+        //addWeighted(WalterWhite, 0.5, frame, 0.5, 0.0, frame);
         //addWeighted(WalterWhite, 0, frame, 1, 0, frame);
-        //overlayImage( &frame, &WalterWhite, cv::Point());
+        
+        overlayImage( &frame, &WalterWhite, cv::Point());
         //overlayImage( &frame, &JesseWeNeed, cv::Point());
         cv::putText(frame,
                     "FPS: " + std::to_string(FPS),
