@@ -73,8 +73,8 @@ int main(int argc, char *argv[]){
     cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
     cv::resize(flag, flag, frame.size());
     cv::resize(WalterWhite, WalterWhite, frame.size());
-    //cv::cvtColor(WalterWhite, WalterWhite, cv::COLOR_RGBA2BGR);
-    //cv::cvtColor(JesseWeNeed, JesseWeNeed, cv::COLOR_RGBA2BGR);
+    cv::cvtColor(WalterWhite, WalterWhite, cv::COLOR_RGBA2RGB);
+    cv::cvtColor(JesseWeNeed, JesseWeNeed, cv::COLOR_RGBA2RGB);
 
     timespec begin {};
     timespec end {};
@@ -82,7 +82,7 @@ int main(int argc, char *argv[]){
     double FPS {};
     int t {};
 
-    while (static_cast<int>(42069.1488)){
+    while (true){
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &begin);
         }
@@ -107,11 +107,11 @@ int main(int argc, char *argv[]){
                          cv::Size(15, 15),
                          0.5, 0.5);
         addWeighted(flag, 0.5, frame, 0.5, 0.0, frame);
-        //frame += WalterWhite;
-        //frame += JesseWeNeed;
+        frame += WalterWhite;
+        frame += JesseWeNeed;
         //addWeighted(WalterWhite, 0, frame, 1, 0, frame);
-        overlayImage( &frame, &WalterWhite, cv::Point());
-        overlayImage( &frame, &JesseWeNeed, cv::Point());
+        //overlayImage( &frame, &WalterWhite, cv::Point());
+        //overlayImage( &frame, &JesseWeNeed, cv::Point());
         cv::putText(frame,
                     "FPS: " + std::to_string(FPS),
                     cv::Point(8, 32),
