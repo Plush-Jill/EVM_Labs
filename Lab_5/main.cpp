@@ -1,28 +1,28 @@
 #include <iostream>
 #include "Lab_5_Exceptions.h"
 #include <opencv4/opencv2/opencv.hpp>
-#include <opencv2/highgui/highgui.hpp>
-#include <opencv2/imgproc.hpp>
-#include <opencv2/imgcodecs.hpp>
+#include <opencv4/opencv2/highgui/highgui.hpp>
+#include <opencv4/opencv2/imgproc.hpp>
+#include <opencv4/opencv2/imgcodecs.hpp>
 #include <ctime>
 /// http://192.168.0.103:4747/video
 /// webcam
 
-void overlayImage(cv::Mat* src, cv::Mat* overlay, const cv::Point& location){
-    for (int y = cv::max(location.y, 0); y < src->rows; ++y){
+void overlayImage(cv::Mat* src, cv::Mat* overlay, const cv::Point& location) {
+    for (int y = cv::max(location.y, 0); y < src->rows; ++y) {
         int fY = y - location.y;
-        if (fY >= overlay->rows){
+        if (fY >= overlay->rows) {
             break;
         }
-        for (int x = cv::max(location.x, 0); x < src->cols; ++x){
+        for (int x = cv::max(location.x, 0); x < src->cols; ++x) {
             int fX = x - location.x;
 
-            if (fX >= overlay->cols){
+            if (fX >= overlay->cols) {
                 break;
             }
-            double opacity = ((double)overlay->data[fY * overlay->step + fX * overlay->channels() + 3]) / 255;
+            double opacity = ((double) overlay->data[fY * overlay->step + fX * overlay->channels() + 3]) / 255;
 
-            for (int c = 0; opacity > 0 && c < src->channels(); ++c){
+            for (int c = 0; opacity > 0 && c < src->channels(); ++c) {
                 unsigned char overlayPx = overlay->data[fY * overlay->step + fX * overlay->channels() + c];
                 unsigned char srcPx = src->data[y * src->step + x * src->channels() + c];
                 src->data[y * src->step + src->channels() * x + c] = srcPx * (1. - opacity) + overlayPx * opacity;
@@ -40,7 +40,6 @@ int main(int argc, char *argv[]){
     cv::VideoCapture capture; //(videoStreamAddress[0] - '0');
     bool sourceIsMobileCamera;
 
-
     if (videoStreamAddress == "webcam"){
         sourceIsMobileCamera = false;
         capture = cv::VideoCapture(0);
@@ -48,7 +47,6 @@ int main(int argc, char *argv[]){
         sourceIsMobileCamera = true;
         capture = cv::VideoCapture(videoStreamAddress);
     }
-
 
     try{
         if (!capture.isOpened()){
@@ -65,10 +63,9 @@ int main(int argc, char *argv[]){
         }
     }
 
-
     cv::Mat frame;
     cv::Mat flag = cv::imread("/home/plushjill/All_Random/china_flag2.jpg", cv::IMREAD_UNCHANGED);
-    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Whalter_White4.png", cv::IMREAD_UNCHANGED);
+    cv::Mat WalterWhite = cv::imread("/home/plushjill/All_Random/Whalter_White3.png", cv::IMREAD_UNCHANGED);
     cv::Mat JesseWeNeed = cv::imread("/home/plushjill/All_Random/broadcast5.png", cv::IMREAD_UNCHANGED);
 
     capture.read(frame);
@@ -76,6 +73,8 @@ int main(int argc, char *argv[]){
     cv::resize(JesseWeNeed, JesseWeNeed, frame.size());
     cv::resize(flag, flag, frame.size());
     cv::resize(WalterWhite, WalterWhite, frame.size());
+    //cv::cvtColor(WalterWhite, WalterWhite, cv::COLOR_RGBA2BGR);
+    //cv::cvtColor(JesseWeNeed, JesseWeNeed, cv::COLOR_RGBA2BGR);
 
     timespec begin {};
     timespec end {};
@@ -87,7 +86,6 @@ int main(int argc, char *argv[]){
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &begin);
         }
-
 
         capture.read(frame);
         try{
@@ -101,7 +99,6 @@ int main(int argc, char *argv[]){
         }
 
 
-
         if (!sourceIsMobileCamera){
             cv::flip(frame, frame, 1);
         }
@@ -110,6 +107,9 @@ int main(int argc, char *argv[]){
                          cv::Size(15, 15),
                          0.5, 0.5);
         addWeighted(flag, 0.5, frame, 0.5, 0.0, frame);
+        //frame += WalterWhite;
+        //frame += JesseWeNeed;
+        //addWeighted(WalterWhite, 0, frame, 1, 0, frame);
         overlayImage( &frame, &WalterWhite, cv::Point());
         overlayImage( &frame, &JesseWeNeed, cv::Point());
         cv::putText(frame,
@@ -121,7 +121,6 @@ int main(int argc, char *argv[]){
                     1,
                     cv::LINE_AA);
 
-
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &end);
             takenTime = (end.tv_sec - begin.tv_sec) * 1e9;
@@ -130,8 +129,6 @@ int main(int argc, char *argv[]){
             t = 0;
         }
         ++t;
-
-
 
         cv::imshow("Camera", frame);
 
