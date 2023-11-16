@@ -58,7 +58,7 @@ void printDevices(libusb_device *dev){
             if (c){
                 printf("        ");
             }
-            std::cout << "Product: " << product;
+            std::cout << product;
         }
 
         libusb_close(handle);
