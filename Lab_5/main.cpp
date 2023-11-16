@@ -77,12 +77,27 @@ int main(int argc, char *argv[]){
     double FPS{};
     int t{};
 
+    timespec beginRead{};
+    timespec endRead{};
+    double takenTimeToRead{};
+
+    timespec beginShow{};
+    timespec endShow{};
+    double takenTimeToShow{};
+
     while (static_cast<bool>(42069.1488)){
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &begin);
+            clock_gettime(CLOCK_BOOTTIME, &beginRead);
         }
 
         capture.read(frame);
+
+        if (t == 3){
+            clock_gettime(CLOCK_BOOTTIME, &endRead);
+            takenTimeToRead = static_cast<double>(endRead.tv_sec - beginRead.tv_sec) * 1e9;
+            takenTimeToRead = (takenTimeToRead + static_cast<double>(endRead.tv_nsec - beginRead.tv_nsec)) * 1e-9;
+        }
         try{
             if (frame.empty()){
                 throw FrameException("Frame wasn't read");
@@ -117,6 +132,22 @@ int main(int argc, char *argv[]){
                     cv::Scalar(0, 255, 200),
                     1,
                     cv::LINE_AA);
+        cv::putText(frame,
+                    "Time To Read: " + std::to_string(takenTimeToRead),
+                    cv::Point(8, 52),
+                    cv::FONT_HERSHEY_SIMPLEX,
+                    0.5,
+                    cv::Scalar(0, 255, 200),
+                    1,
+                    cv::LINE_AA);
+        cv::putText(frame,
+                    "Time To Show: " + std::to_string(takenTimeToShow),
+                    cv::Point(8, 72),
+                    cv::FONT_HERSHEY_SIMPLEX,
+                    0.5,
+                    cv::Scalar(0, 255, 200),
+                    1,
+                    cv::LINE_AA);
 
         if (t == 3){
             clock_gettime(CLOCK_BOOTTIME, &end);
@@ -127,8 +158,15 @@ int main(int argc, char *argv[]){
         }
         ++t;
 
+        if (t == 3){
+            clock_gettime(CLOCK_BOOTTIME, &beginShow);
+        }
         cv::imshow("Camera", frame);
-
+        if (t == 3){
+            clock_gettime(CLOCK_BOOTTIME, &endShow);
+            takenTimeToShow = static_cast<double>(endShow.tv_sec - beginShow.tv_sec) * 1e9;
+            takenTimeToShow = (takenTimeToShow + static_cast<double>(endShow.tv_nsec - beginShow.tv_nsec)) * 1e-9;
+        }
         int c = cv::waitKey(1);
         if (c == 27){
             break;
