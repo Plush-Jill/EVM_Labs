@@ -24,8 +24,11 @@ void printDevices(libusb_device *dev){
         fprintf(stderr, "Ошибка: дескриптор устройства не получен, код: %d.\n", x);
         return;
     }
-    libusb_config_descriptor *config;
-    libusb_get_config_descriptor(dev, 0, &config);
+    libusb_config_descriptor* config;
+    int res = libusb_get_config_descriptor(dev, 0, &config);
+    if (res < 0) {
+        fprintf(stderr, "libusb_get_config_descriptor error: (Code: %d)\n", res);
+    }
     printf("%.2x %.4x %.3d %.4x ",
            descriptor.bDeviceClass,
            descriptor.idVendor,
@@ -35,7 +38,10 @@ void printDevices(libusb_device *dev){
     libusb_open(dev, &handle);
     bool c = false;
     if (handle && descriptor.iSerialNumber){
-        libusb_get_string_descriptor_ascii(handle, descriptor.iSerialNumber, serialNum, sizeof(serialNum));
+        int result = libusb_get_string_descriptor_ascii(handle, descriptor.iSerialNumber, serialNum, sizeof(serialNum));
+        if (result < 0) {
+            fprintf(stderr, "libusb_get_string_descriptor_ascii error: (Code: %d)\n", result);
+        }
         printf("%s", serialNum);
     }else{
         c = true;
@@ -61,6 +67,7 @@ void printDevices(libusb_device *dev){
             std::cout << product;
         }
 
+        libusb_free_config_descriptor(config);
         libusb_close(handle);
 
     }catch (libusb_error &error){
@@ -79,12 +86,14 @@ int main(){
     x = libusb_init(&context); // инициализировать библиотеку libusb, открыть сессию работы с libusb
     if (x < 0){
         fprintf(stderr, "Ошибка: инициализация не выполнена, код: %d.\n", x);
+        libusb_exit(context);
         return 1;
     }
 
     number = libusb_get_device_list(context, &devices);
     if (number == 0){
         fprintf(stderr,"Ошибка: список USB устройств не получен. Код: %d\n", x);
+        libusb_exit(context);
         return 1;
     }
 
