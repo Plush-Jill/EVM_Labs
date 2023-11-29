@@ -114,7 +114,7 @@ void useBLAS(){
 int main(int argc, char** argv){
 
 
-    if (argc > 1){
+    /*if (argc > 1){
         if (std::string(argv[1]) == "-naive"){
             useNaive();
         }else if (std::string(argv[1]) == "-BLAS"){
@@ -126,7 +126,9 @@ int main(int argc, char** argv){
         }
     }else{
         std::cerr << "No arguments." << std::endl;
-    }
+    }*/
+
+
 
     return 0;
 }

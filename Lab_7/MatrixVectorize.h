@@ -1,6 +1,8 @@
 #include <iostream>
 #include <cstring>
 #include <immintrin.h>
+#include <ia32intrin.h>
+#include <mmintrin.h>
 
 #define M 10
 #define N 2048
