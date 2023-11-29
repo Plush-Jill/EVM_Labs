@@ -10,99 +10,110 @@
 
 void useNaive(){
     srand(100);
-    MatrixNaive ma, mb, mr, mo;
-    for (size_t i = 0; i < N; i++) {
-        for (size_t j = 0; j < N; j++) {
+    MatrixNaive A;
+    MatrixNaive B;
+    MatrixNaive R;
+    MatrixNaive inverseMatrix;
+    for (size_t i = 0; i < N; ++i){
+        for (size_t j = 0; j < N; ++j){
             float a = rand() % 100;
-            ma[i][j] = a;
-            mb[j][i] = a;
-            mr[i][j] = 0;
-            mo[i][j] = 0;
+            A[i][j] = a;
+            B[j][i] = a;
+            R[i][j] = 0;
+            inverseMatrix[i][j] = 0;
         }
-        mr[i][i] = 1;
-        mo[i][i] = 1;
+        R[i][i] = 1;
+        inverseMatrix[i][i] = 1;
     }
 
-    mb /= (ma.maxSumRows() * ma.maxSumColumns());
-    mr -= (mb * ma);
+    B /= (A.maxSumRows() * A.maxSumColumns());
+    R -= (B * A);
 
-    MatrixNaive mrc;
-    mrc = mr;
-    for (size_t i = 1; i < M + 1; i++) {
-        mo += mr;
-        mr = mr * mrc;
+    MatrixNaive matrixF;
+    matrixF = R;
+    for (size_t i = 1; i < M + 1; ++i){
+        inverseMatrix += R;
+        R = R * matrixF;
     }
-    mo = mo * mb;
+    inverseMatrix = inverseMatrix * B;
 
     std::cout << "naive" << std::endl;
-    ma.printMatrix();
-    mo.printMatrix();
+    A.printMatrix();
+    inverseMatrix.printMatrix();
 }
 void useVectorzie(){
     srand(100);
-    MatrixVectorize ma, mb, mr, mo;
-    for (size_t i = 0; i < N; i++) {
-        for (size_t j = 0; j < N; j++) {
+    MatrixVectorize A;
+    MatrixVectorize B;
+    MatrixVectorize R;
+    MatrixVectorize inverseMatrix;
+    for (size_t i = 0; i < N; ++i){
+        for (size_t j = 0; j < N; ++j){
             float a = rand() % 100;
-            ma[i][j] = a;
-            mb[j][i] = a;
-            mr[i][j] = 0;
-            mo[i][j] = 0;
+            A[i][j] = a;
+            B[j][i] = a;
+            R[i][j] = 0;
+            inverseMatrix[i][j] = 0;
         }
-        mr[i][i] = 1;
-        mo[i][i] = 1;
+        R[i][i] = 1;
+        inverseMatrix[i][i] = 1;
     }
 
-    mb /= (ma.maxSumRows() * ma.maxSumColumns());
-    mr -= (mb * ma);
+    B /= (A.maxSumRows() * A.maxSumColumns());
+    R -= (B * A);
 
-    MatrixVectorize mrc;
-    mrc = mr;
-    for (size_t i = 1; i < M + 1; i++) {
-        mo += mr;
-        mr = mr * mrc;
+    MatrixVectorize matrixF;
+    matrixF = R;
+    for (size_t i = 1; i < M + 1; ++i){
+        inverseMatrix += R;
+        R = R * matrixF;
     }
-    mo = mo * mb;
+    inverseMatrix = inverseMatrix * B;
 
     std::cout << "Vect" << std::endl;
-    ma.printMatrix();
-    mo.printMatrix();
+    A.printMatrix();
+    inverseMatrix.printMatrix();
 
 }
 void useBLAS(){
     srand(100);
-    MatrixBLAS ma, mb, mr, mo;
-    for (size_t i = 0; i < N; i++) {
-        for (size_t j = 0; j < N; j++) {
+    MatrixBLAS A;
+    MatrixBLAS B;
+    MatrixBLAS R;
+    MatrixBLAS inverseMatrix;
+    for (size_t i = 0; i < N; ++i){
+        for (size_t j = 0; j < N; ++j){
             float a = rand() % 100;
-            ma[i][j] = a;
-            mb[j][i] = a;
-            mr[i][j] = 0;
-            mo[i][j] = 0;
+            A[i][j] = a;
+            B[j][i] = a;
+            R[i][j] = 0;
+            inverseMatrix[i][j] = 0;
         }
-        mr[i][i] = 1;
-        mo[i][i] = 1;
+        R[i][i] = 1;
+        inverseMatrix[i][i] = 1;
     }
 
-    mb /= (ma.maxSumRows() * ma.maxSumColumns());
-    mr -= (mb * ma);
+    B /= (A.maxSumRows() * A.maxSumColumns());
+    R -= (B * A);
 
-    MatrixBLAS mrc;
-    mrc = mr;
-    for (size_t i = 1; i < M + 1; i++) {
-        mo += mr;
-        mr = mr * mrc;
+    MatrixBLAS matrixF;
+    matrixF = R;
+    for (size_t i = 1; i < M + 1; ++i){
+        inverseMatrix += R;
+        R = R * matrixF;
     }
-    mo = mo * mb;
+    inverseMatrix = inverseMatrix * B;
 
     std::cout << "blas2" << std::endl;
-    ma.printMatrix();
-    mo.printMatrix();
+    A.printMatrix();
+    inverseMatrix.printMatrix();
 
 }
 
 
 int main(int argc, char** argv){
+
+
     if (argc > 1){
         if (std::string(argv[1]) == "-naive"){
             useNaive();
@@ -116,34 +127,6 @@ int main(int argc, char** argv){
     }else{
         std::cerr << "No arguments." << std::endl;
     }
-    /*srand(100);
-    MatrixBLAS A, B, C, D;
-    for (size_t i = 0; i < N; ++i){
-        for (size_t j = 0; j < N; ++j){
-            float a = rand() % 100;
-            A[i][j] = a;
-            B[j][i] = a;
-            C[i][j] = 0;
-            D[i][j] = 0;
-        }
-        C[i][i] = 1;
-        D[i][i] = 1;
-    }
-
-    B /= (A.maxSumRows() * A.maxSumColumns());
-    C -= (B * A);
-
-    MatrixBLAS mrc;
-    mrc = C;
-    for (size_t i = 1; i < M + 1; ++i){
-        D += C;
-        C = C * mrc;
-    }
-    D = D * B;
-
-    std::cout << "blas2" << std::endl;
-    A.printMatrix();
-    D.printMatrix();*/
 
     return 0;
 }

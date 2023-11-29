@@ -50,7 +50,7 @@ float MatrixBLAS::maxSumRows(){
     float maxSum = 0;
     for (size_t i = 0; i < N; ++i){
         float sum = cblas_sasum(N, (*this)[i], 1);
-        if (sum > maxSum) {
+        if (sum > maxSum){
             maxSum = sum;
         }
     }
