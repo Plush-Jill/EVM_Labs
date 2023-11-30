@@ -5,8 +5,8 @@
 
 
 #define M 10
-#define N 2048
-
+//#define N 2048
+#define N 5
 
 class MatrixNaive{
 private:
@@ -29,12 +29,19 @@ public:
     }
 
 
-    MatrixNaive& operator=(const MatrixNaive& source){
+    /*MatrixNaive& operator=(const MatrixNaive& source){
         if (this == &source){
             return *this;
         }
         std::memcpy(this->array, source.array, sizeof(int) * N * N);
         return *this;
+    }*/
+    void operator=(const MatrixNaive &source) {
+        for (size_t i = 0; i < N; i++) {
+            for (size_t j = 0; j < N; j++) {
+                (*this)[i][j] = source[i][j];
+            }
+        }
     }
     float* operator[](const size_t i){
         return (array + (i * N));
@@ -118,15 +125,70 @@ void useNaive(){
     MatrixNaive InverseMatrix;
     for (size_t i = 0; i < N; ++i){
         for (size_t j = 0; j < N; ++j){
-            float a = rand() % 100;
-            A[i][j] = a;
-            B[j][i] = a;
+            //float a = rand() % 100;
+            //A[i][j] = a;
+            //B[j][i] = a;
+            A[i][j] = 0;
+            B[j][i] = 0;
             R[i][j] = 0;
             InverseMatrix[i][j] = 0;
         }
+        A[i][i] = 1;
+        B[i][i] = 1;
         R[i][i] = 1;
         InverseMatrix[i][i] = 1;
     }
+    A[0][0] = 5;
+    A[0][1] = 5;
+    A[0][2] = 5;
+    A[0][3] = 5;
+    A[0][4] = 5;
+    A[1][0] = 10;
+    A[1][1] = 5;
+    A[1][2] = 5;
+    A[1][3] = 5;
+    A[1][4] = 5;
+    A[2][0] = 10;
+    A[2][1] = 10;
+    A[2][2] = 10;
+    A[2][3] = 10;
+    A[2][4] = 0;
+    A[3][0] = 10;
+    A[3][1] = 0;
+    A[3][2] = 5;
+    A[3][3] = 5;
+    A[3][4] = 5;
+    A[4][0] = 20;
+    A[4][1] = 20;
+    A[4][2] = 20;
+    A[4][3] = 20;
+    A[4][4] = 10;
+
+    B[0][0] = 5;
+    B[0][1] = 5;
+    B[0][2] = 5;
+    B[0][3] = 5;
+    B[0][4] = 5;
+    B[1][0] = 10;
+    B[1][1] = 5;
+    B[1][2] = 5;
+    B[1][3] = 5;
+    B[1][4] = 5;
+    B[2][0] = 10;
+    B[2][1] = 10;
+    B[2][2] = 10;
+    B[2][3] = 10;
+    B[2][4] = 0;
+    B[3][0] = 10;
+    B[3][1] = 0;
+    B[3][2] = 5;
+    B[3][3] = 5;
+    B[3][4] = 5;
+    B[4][0] = 20;
+    B[4][1] = 20;
+    B[4][2] = 20;
+    B[4][3] = 20;
+    B[4][4] = 10;
 
     B /= (A.maxSumRows() * A.maxSumColumns());
     R -= (B * A);
