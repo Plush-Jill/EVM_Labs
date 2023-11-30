@@ -5,8 +5,8 @@
 
 
 #define M 10
-//#define N 2048
-#define N 5
+#define N 2048
+//#define N 5
 
 class MatrixNaive{
 private:
@@ -125,19 +125,20 @@ void useNaive(){
     MatrixNaive InverseMatrix;
     for (size_t i = 0; i < N; ++i){
         for (size_t j = 0; j < N; ++j){
-            //float a = rand() % 100;
-            //A[i][j] = a;
-            //B[j][i] = a;
-            A[i][j] = 0;
-            B[j][i] = 0;
+            float a = rand() % 100;
+            A[i][j] = a;
+            B[j][i] = a;
+            //A[i][j] = 0;
+            //B[j][i] = 0;
             R[i][j] = 0;
             InverseMatrix[i][j] = 0;
         }
-        A[i][i] = 1;
-        B[i][i] = 1;
+        //A[i][i] = 1;
+        //B[i][i] = 1;
         R[i][i] = 1;
         InverseMatrix[i][i] = 1;
     }
+    /*
     A[0][0] = 5;
     A[0][1] = 5;
     A[0][2] = 5;
@@ -189,6 +190,7 @@ void useNaive(){
     B[4][2] = 20;
     B[4][3] = 20;
     B[4][4] = 10;
+    */
 
     B /= (A.maxSumRows() * A.maxSumColumns());
     R -= (B * A);
