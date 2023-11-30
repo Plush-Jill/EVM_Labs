@@ -173,3 +173,4 @@ void MatrixVectorize::printMatrix(){
     }
     std::cout << std::endl;
 }
+
