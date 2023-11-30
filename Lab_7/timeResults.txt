@@ -1,0 +1,20 @@
+Naive:
+
+real	0m52,028s
+user	0m52,163s
+sys	0m0,944s
+=======================
+
+Intrinsic with using 512 bit registers:
+
+real	0m16,425s
+user	0m16,623s
+sys	0m0,888s
+=======================
+
+BLAS:
+
+real	0m2,712s
+user	0m8,278s
+sys	0m2,243s
+=======================
