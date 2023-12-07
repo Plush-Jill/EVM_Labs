@@ -54,9 +54,9 @@ int main(){
             temp = array[temp];
         }
         unsigned long long end = __builtin_ia32_rdtsc();
-        trashOutput << temp;
+        trashOutput << temp + 1;
 
-        std::string fragmentsCountInString = std::to_string(fragmentsCount) + " fragments";
+        std::string fragmentsCountInString = std::to_string(fragmentsCount);// + " fragments";
         resultsOutput << fragmentsCountInString << ';' << (end - begin) / bypassCount << std::endl;
         std::cout << fragmentsCountInString << ';' << (end - begin) / bypassCount << std::endl;
 
@@ -65,5 +65,6 @@ int main(){
 
     free(array);
     resultsOutput.close();
+    trashOutput.close();
     return 0;
 }
