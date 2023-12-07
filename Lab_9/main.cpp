@@ -12,12 +12,12 @@
 #define L2CacheSize ((1024 + 256) * KB)
 #define L3CacheSize (12 * MB)
 #define intArraySizeForL1CacheSize (L1CacheSize / (int)sizeof(int))
-#define intArraySizeForL3CacheSize (L3CacheSize / (int)sizeof(int))
+#define intArraySizeForL3CacheSize ((L3CacheSize / (int)sizeof(int)))
 #define intArraySizeForKB ((int)1024 / (int)(sizeof(int)))
 #define intArraySizeForMB (MB / (int)(sizeof(int)))
 #define bypassCount (int)(1000 * 80000)
 #define fragmentsOffsetL1 intArraySizeForL1CacheSize
-#define fragmentsOffsetL3 intArraySizeForL3CacheSize
+#define fragmentsOffsetL3 (intArraySizeForL3CacheSize * 8)
 #define intArrayUniversalSize (1024 * 1024 * 16 / sizeof(int))
 #define fragmentOffsetUniversal (1024 * 1024 * 16 / sizeof(int))
 
