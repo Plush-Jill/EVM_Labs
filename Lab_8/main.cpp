@@ -119,7 +119,7 @@ void sattoloAlgorithm(int* array, int arraySize){
 }
 void makeRandomBypass(const int* ArraySizes){
 
-    std::ofstream resultsOutput("random_bypass_results.txt", std::ios::out);
+    std::ofstream resultsOutput("random_bypass_results_clear.txt", std::ios::out);
     if (!resultsOutput.is_open()){
         throw std::exception();
     }
