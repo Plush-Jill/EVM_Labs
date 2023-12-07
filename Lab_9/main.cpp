@@ -58,7 +58,7 @@ int main(){
 
         std::string fragmentsCountInString = std::to_string(fragmentsCount);// + " fragments";
         resultsOutput << fragmentsCountInString << ';' << (end - begin) / bypassCount << std::endl;
-        std::cout << fragmentsCountInString << ';' << (end - begin) / bypassCount << std::endl;
+        //std::cout << fragmentsCountInString << ';' << (end - begin) / bypassCount << std::endl;
 
     }
 
