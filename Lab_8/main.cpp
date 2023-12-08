@@ -162,20 +162,6 @@ void makeRandomBypass(const int* ArraySizes){
 }
 
 int main(int argc, char** argv){
-    int array[5];
-    /*for (int j {}; j < 5; ++j){
-        array[j] = j + 1;
-    }*/
-    //array[4] = 0;
-    /*for (int i {}; i < 5; ++i){
-        std::cout << array[i] << ' ';
-    }*/
-    //std::cout << std::endl;
-    /*sattoloAlgorithm(&array[0], 5);
-    for (int i {}; i < 5; ++i){
-        std::cout << array[i] << ' ';
-    }*/
-
 
     int ArraySizes[SizesCount];
     ArraySizes[0] = intArraySizeForKB;
@@ -185,11 +171,6 @@ int main(int argc, char** argv){
     for (int i {1}; i < SizesCount; i += 2){
         ArraySizes[i] = ArraySizes[i-1] + (ArraySizes[i-1] / 2);
     }
-    /*for (int i {}; i < SizesCount; ++i) {
-        std::string addd = i < 20 ? std::to_string(ArraySizes[i] * sizeof(int) / KB) + "KB" : std::to_string(ArraySizes[i] * sizeof(int) / MB) + "MB";
-        std::cout << addd << std::endl;
-    }*/
-
 
 
 
