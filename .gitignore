@@ -32,3 +32,7 @@
 *.app
 Lab_10/cmake-build-debug/
 Lab_10/.idea
+Lab_10/sourceFileGenerator.x
+Lab_10/sourceFileGenerator.x.c
+Lab_10/test
+Lab_10/trash_output.txt
